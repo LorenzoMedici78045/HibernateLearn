@@ -19,13 +19,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "AIRPORTS", schema = "bookings")
+@Table(name = "AIRPORTS")
 public class Airports implements Serializable
 {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "AIRPORT_CODE")
-    @Size(max = 3)
-    private String airportCode;
+    private Long airportId;
 
     @Column(name = "AIRPORT_NAME", nullable = false)
     private String name;
@@ -44,9 +44,15 @@ public class Airports implements Serializable
     @Pattern(regexp = ".*[/]].*", message = "Use timezone form")
     private String timezone;
 
-    @OneToMany(mappedBy = "airportArrivalCode" ,fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "airportArrival" ,fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Flights> arrivalFlights = new ArrayList<>();
 
-    @OneToMany(mappedBy = "airportDepartureCode" ,fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "airportDeparture" ,fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Flights> departureFlights = new ArrayList<>();
+
+    @OneToMany(mappedBy = "airportArrivalCode" ,fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Flights> arrivalFlightsCode = new ArrayList<>();
+
+    @OneToMany(mappedBy = "airportDepartureCode" ,fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Flights> departureFlightsCode = new ArrayList<>();
 }

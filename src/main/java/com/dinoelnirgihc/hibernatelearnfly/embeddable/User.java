@@ -1,19 +1,17 @@
 package com.dinoelnirgihc.hibernatelearnfly.embeddable;
 
-import com.dinoelnirgihc.hibernatelearnfly.json.ContactData;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
+import com.dinoelnirgihc.hibernatelearnfly.converter.ContactDataConverter;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 import org.hibernate.validator.constraints.UniqueElements;
 /** Embeddable класс класса-сущности Tickets*/
+@Embeddable
 @Data
 @AllArgsConstructor
-@Embeddable
+@NoArgsConstructor
 public class User
 {
     @Column(name = "PASSENGER_ID", nullable = false)
@@ -23,8 +21,9 @@ public class User
     @Column(name = "PASSENGER_NAME", nullable = false)
     private String name;
 
-    @JdbcTypeCode(SqlTypes.JSON)
+
     @Column(name = "CONTACT_DATA", nullable = true)
+    @Convert(converter = ContactDataConverter.class)
     private ContactData contactData;
 
 }

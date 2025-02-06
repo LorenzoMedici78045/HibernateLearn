@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  Класс Билеты отражает сущность Tickets. Отражает информацию о билетах.
@@ -18,13 +20,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "TICKETS", schema = "bookings")
+@Table(name = "TICKETS")
 public class Tickets implements Serializable
 {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "TICKET_NO")
-    @Size(max = 255)
-    private String id;
+    private Long ticketId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BOOK_REF"/*referencedColumnName = "id"*/,
@@ -45,6 +47,7 @@ public class Tickets implements Serializable
     //BOOKINGS_BOOK_REF
     private Bookings bookingsBook;
 
-
+    @OneToMany(mappedBy = "ticket", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<TicketFlights> ticketFlights = new ArrayList<>();
 
 }

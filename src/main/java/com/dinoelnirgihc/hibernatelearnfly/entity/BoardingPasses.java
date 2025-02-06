@@ -3,10 +3,7 @@ package com.dinoelnirgihc.hibernatelearnfly.entity;
 import com.dinoelnirgihc.hibernatelearnfly.embeddable.BoardingPassesId;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -18,17 +15,17 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "BOARDING_PASSES", schema = "bookings")
+@Table(name = "BOARDING_PASSES")
 public class BoardingPasses implements Serializable
 {
     @EmbeddedId
     private BoardingPassesId id;
 
-    @Column(name = "BOARDING_NO")
-    private Integer boardingNumber;
+    @Column(name = "BOARDING_NO", nullable = false)
+    private Long boardingNumber;
 
-    @Column(name = "SEATS_NO")
-    private String seatsNumber;
+    @Column(name = "SEAT_NO", nullable = false)
+    private Long seatNumber;
 
     @ManyToOne
     @JoinColumns({

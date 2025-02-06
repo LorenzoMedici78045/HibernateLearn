@@ -1,7 +1,6 @@
 package com.dinoelnirgihc.hibernatelearnfly.embeddable;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,10 +14,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class TicketFlightsId implements Serializable
 {
-    @Size(max = 13)
     @Column(name = "TICKET_NO")
-    private String ticketNumber;
+    private Long ticketId;
 
-    @Column(name="FLIGHT_ID")
-    private Integer id;
+    @Column(name = "FLIGHT_ID")
+    private Long flightId;
 }

@@ -16,7 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 @Builder
-@Table(name = "SEATS", schema = "bookings")
+@Table(name = "SEATS")
 public class Seats implements Serializable
 {
     @EmbeddedId

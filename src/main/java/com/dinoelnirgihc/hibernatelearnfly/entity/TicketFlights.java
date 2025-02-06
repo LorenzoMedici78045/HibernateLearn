@@ -11,7 +11,9 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -22,14 +24,14 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "TICKET_FLIGHTS", schema = "bookings")
+@Table(name = "TICKET_FLIGHTS")
 public class TicketFlights implements Serializable {
     @EmbeddedId
     @AttributeOverrides({
-            @AttributeOverride(name = "ticketNumber", column = @Column(name = "TICKET_NO")),
-            @AttributeOverride(name = "id", column = @Column(name = "FLIGHT_ID"))
+            @AttributeOverride(name = "ticketId", column = @Column(name = "TICKET_NO")),
+            @AttributeOverride(name = "flightId", column = @Column(name = "FLIGHT_ID"))
     })
-    private TicketFlightsId id;
+    private TicketFlightsId ticketFlightsId;
 
     @ManyToOne
     @JoinColumn(name = "TICKET_NO"/*referencedColumnName = "id"*/,
@@ -52,6 +54,6 @@ public class TicketFlights implements Serializable {
     private BigDecimal amount;
 
     @OneToMany(mappedBy = "ticket", fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
-    private Set<BoardingPasses> boardingPasses = new HashSet<>();
+    private List<BoardingPasses> boardingPasses = new ArrayList<>();
 
 }

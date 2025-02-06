@@ -1,36 +1,41 @@
 package com.dinoelnirgihc.hibernatelearnfly.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /** Класс Самолеты отражает сущность  aircrafts. Содержит информацию о модели и дальности ее перелета*/
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-@Table(name = "AIRCRAFTS", schema = "bookings")
+@Table(name = "AIRCRAFTS")
 public class Aircrafts implements Serializable
 {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "AIRCRAFT_CODE")
-    @Size(max = 3)
-    private String id;
+    private Long aircraftId;
 
     @Column(name = "MODEL", nullable = false)
+    @NotBlank
     private String model;
 
     @Column(name = "RANGE", nullable = false)
     private int range;
 
     @OneToMany(mappedBy = "aircrafts", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Flights> flights = new HashSet<>();
+    private List<Flights> flights = new ArrayList<>();
+
+    @OneToMany(mappedBy = "aircraft", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Seats> seats = new ArrayList<>();
+
+    @OneToMany(mappedBy = "aircraftAircraft", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Seats> seatsSeats = new ArrayList<>();
+
 }

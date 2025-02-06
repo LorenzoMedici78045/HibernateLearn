@@ -8,7 +8,9 @@ import org.hibernate.annotations.Fetch;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /** Класс Бронирования отражает сущность  bookings. Содержит информацию о дате, времени и стоимости полета*/
@@ -17,13 +19,13 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "BOOKINGS", schema = "bookings")
+@Table(name = "BOOKINGS")
 public class Bookings  implements Serializable
 {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "BOOK_REF")
-    @Size(max = 6)
-    private String id;
+    private Long id;
 
     @Column(name = "BOOK_DATE", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -33,7 +35,10 @@ public class Bookings  implements Serializable
     @Size(max = 10)
     private BigDecimal totalAmount;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private Set<Tickets> TicketsList = new HashSet<Tickets>();
+    @OneToMany(mappedBy = "bookings",fetch = FetchType.LAZY)
+    private List<Tickets> TicketsList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "bookingsBook",fetch = FetchType.LAZY)
+    private List<Tickets> TicketsListLists = new ArrayList<>();
 
 }
