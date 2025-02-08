@@ -12,12 +12,12 @@ public class AircraftsRepository
     public List<Aircrafts> findAllAircrafts(Session session)
     {
         session.beginTransaction();
-        List<Aircrafts> list = session.createQuery("from Aircrafts").list();
+        List<Aircrafts> list = session.createQuery("from Aircrafts", Aircrafts.class).list();
         session.getTransaction().commit();
         return list;
     }
 
-    public String returnModelById(Session session,Long id)
+    public String selectModelById(Session session,Long id)
     {
         session.beginTransaction();
         Aircrafts aircrafts = session.get(Aircrafts.class, id);
@@ -25,7 +25,7 @@ public class AircraftsRepository
         return aircrafts.getModel();
     }
 
-    public Integer returnRangeById(Session session,Long id)
+    public Integer selectRangeById(Session session,Long id)
     {
         session.beginTransaction();
         Aircrafts aircrafts = session.get(Aircrafts.class, id);
@@ -33,7 +33,7 @@ public class AircraftsRepository
         return aircrafts.getRange();
     }
 
-    public List<Aircrafts> returnAircraftsByRangeMore(Session session,Long MoreRange)
+    public List<Aircrafts> selectAircraftsByRangeMore(Session session,int MoreRange)
     {
         session.beginTransaction();
         List<Aircrafts> aircraftsRangeMore =
@@ -42,7 +42,7 @@ public class AircraftsRepository
         return aircraftsRangeMore;
     }
 
-    public List<Aircrafts> returnAircraftsBYModelName(Session session,String ModelName)
+    public List<Aircrafts> selectAircraftsBYModelName(Session session,String ModelName)
     {
         session.beginTransaction();
         List<Aircrafts> aircraftsbyModel =

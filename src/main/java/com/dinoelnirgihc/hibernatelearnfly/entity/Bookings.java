@@ -36,9 +36,9 @@ public class Bookings  implements Serializable
     private BigDecimal totalAmount;
 
     @OneToMany(mappedBy = "bookings",fetch = FetchType.LAZY)
-    private List<Tickets> TicketsList = new ArrayList<>();
+    private List<Tickets> ticketsList = new ArrayList<>();
 
     @OneToMany(mappedBy = "bookingsBook",fetch = FetchType.LAZY)
-    private List<Tickets> TicketsListLists = new ArrayList<>();
+    private List<Tickets> ticketsListLists = new ArrayList<>();
 
 }

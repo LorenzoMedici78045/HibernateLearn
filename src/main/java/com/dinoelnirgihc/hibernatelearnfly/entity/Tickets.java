@@ -26,7 +26,7 @@ public class Tickets implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "TICKET_NO")
-    private Long ticketId;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BOOK_REF"/*referencedColumnName = "id"*/,
@@ -50,4 +50,9 @@ public class Tickets implements Serializable
     @OneToMany(mappedBy = "ticket", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<TicketFlights> ticketFlights = new ArrayList<>();
 
+    public void addTicketFlights(TicketFlights ticketFlight)
+    {
+        this.ticketFlights.add(ticketFlight);
+        ticketFlight.setTicket(this);
+    }
 }

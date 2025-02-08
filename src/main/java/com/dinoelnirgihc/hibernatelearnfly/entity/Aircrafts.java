@@ -20,7 +20,7 @@ public class Aircrafts implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "AIRCRAFT_CODE")
-    private Long aircraftId;
+    private Long id;
 
     @Column(name = "MODEL", nullable = false)
     @NotBlank

@@ -25,7 +25,7 @@ public class Airports implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "AIRPORT_CODE")
-    private Long airportId;
+    private Long id;
 
     @Column(name = "AIRPORT_NAME", nullable = false)
     private String name;

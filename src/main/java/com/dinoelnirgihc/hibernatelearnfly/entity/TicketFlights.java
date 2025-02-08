@@ -31,7 +31,7 @@ public class TicketFlights implements Serializable {
             @AttributeOverride(name = "ticketId", column = @Column(name = "TICKET_NO")),
             @AttributeOverride(name = "flightId", column = @Column(name = "FLIGHT_ID"))
     })
-    private TicketFlightsId ticketFlightsId;
+    private TicketFlightsId id;
 
     @ManyToOne
     @JoinColumn(name = "TICKET_NO"/*referencedColumnName = "id"*/,
@@ -55,5 +55,11 @@ public class TicketFlights implements Serializable {
 
     @OneToMany(mappedBy = "ticket", fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     private List<BoardingPasses> boardingPasses = new ArrayList<>();
+
+    public void addBoarPass(BoardingPasses pass)
+    {
+        this.boardingPasses.add(pass);
+        pass.setTicket(this);
+    }
 
 }
