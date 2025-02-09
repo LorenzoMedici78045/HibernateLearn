@@ -3,6 +3,8 @@ package com.dinoelnirgihc.hibernatelearnfly.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,12 +23,16 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "AIRCRAFTS")
+@OptimisticLocking(type = OptimisticLockType.VERSION)
 public class Aircrafts implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "AIRCRAFT_CODE")
     private Long id;
+
+    @Version
+    private Long version;
 
     @Column(name = "MODEL", nullable = false)
     @NotBlank

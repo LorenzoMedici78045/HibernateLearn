@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,12 +22,16 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Table(name = "AIRPORTS")
+@OptimisticLocking(type = OptimisticLockType.VERSION)
 public class Airports implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "AIRPORT_CODE")
     private Long id;
+
+    @Version
+    private long version;
 
     @Column(name = "AIRPORT_NAME", nullable = false)
     private String name;
