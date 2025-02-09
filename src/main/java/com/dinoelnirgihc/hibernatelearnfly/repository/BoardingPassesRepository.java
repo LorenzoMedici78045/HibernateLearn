@@ -21,7 +21,7 @@ public class BoardingPassesRepository {
      * */
     public List<BoardingPasses> findAllBoardingPasses(Session session) {
         session.beginTransaction();
-        List<BoardingPasses> list = session.createQuery("from BoardingPasses", BoardingPasses.class).list();
+        List<BoardingPasses> list = session.createQuery("from BoardingPasses", BoardingPasses.class).setReadOnly(true).list();
         session.getTransaction().commit();
         return list;
     }
