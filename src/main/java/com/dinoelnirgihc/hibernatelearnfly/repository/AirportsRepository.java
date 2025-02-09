@@ -3,6 +3,8 @@ package com.dinoelnirgihc.hibernatelearnfly.repository;
 import com.dinoelnirgihc.hibernatelearnfly.converterClasses.City;
 import com.dinoelnirgihc.hibernatelearnfly.entity.Aircrafts;
 import com.dinoelnirgihc.hibernatelearnfly.entity.Airports;
+import com.dinoelnirgihc.hibernatelearnfly.entity.QAirports;
+import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -106,5 +108,51 @@ public class AirportsRepository
         cQ.select(root).where(cB.equal(root.get("city"), City));
 
         return session.createQuery(cQ).list();
+    }
+
+    public List<Airports> selectAllAirportsQueryDsl(Session session)
+    {
+        return new JPAQuery<Airports>(session)
+                .select(QAirports.airports)
+                .from(QAirports.airports)
+                .where()
+                .fetch();
+    }
+
+    public Airports returnAirportByNameQueryDsl(Session session, String name)
+    {
+        return new JPAQuery<Airports>(session)
+                .select(QAirports.airports)
+                .from(QAirports.airports)
+                .where(QAirports.airports.name.eq(name))
+                .fetchFirst();
+    }
+
+    public List<Airports> selectAllAirportsByTimezoneQueryDsl(Session session, String Timezone)
+    {
+        return new JPAQuery<Airports>(session)
+                .select(QAirports.airports)
+                .from(QAirports.airports)
+                .where(QAirports.airports.timezone.eq(Timezone))
+                .fetch();
+    }
+
+    public List<Airports> selectAllAirportsByTimezoneMaxQueryDsl(Session session, String Timezone, int max)
+    {
+        return new JPAQuery<Airports>(session)
+                .select(QAirports.airports)
+                .from(QAirports.airports)
+                .where(QAirports.airports.timezone.eq(Timezone))
+                .limit(max)
+                .fetch();
+    }
+
+    public List<Airports> selectAllAirportsByCityQueryDsl(Session session, City City)
+    {
+        return new JPAQuery<Airports>(session)
+                .select(QAirports.airports)
+                .from(QAirports.airports)
+                .where(QAirports.airports.city.eq(City))
+                .fetch();
     }
 }

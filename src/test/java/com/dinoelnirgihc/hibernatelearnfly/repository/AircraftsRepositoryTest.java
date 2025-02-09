@@ -201,4 +201,88 @@ class AircraftsRepositoryTest
             throw new ExceptionInInitializerError(e);
         }
     }
+
+    @Test
+    void findAllAircraftsQueryDsl()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory()) {
+            Session session = sessionFactory.openSession();
+            AircraftsRepository airRep = new AircraftsRepository();
+            airRep.findAllAircraftsQueryDsl(session);
+
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    @Test
+    void selectModelByIdCQueryDsl()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory()) {
+            Session session = sessionFactory.openSession();
+            Aircrafts aircraft = Aircrafts.builder().model("Airbus").range(7500).build();
+            session.persist(aircraft);
+            AircraftsRepository airRep = new AircraftsRepository();
+            airRep.selectModelByIdQueryDsl(session, 1L);
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    @Test
+    void selectRangeByIdQueryDsl()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory()) {
+            Session session = sessionFactory.openSession();
+            Aircrafts aircraft = Aircrafts.builder().model("Airbus").range(7500).build();
+            session.persist(aircraft);
+            AircraftsRepository airRep = new AircraftsRepository();
+            airRep.selectRangeByIdQueryDsl(session, 1L);
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    @Test
+    void selectAircraftsByRangeMoreQueryDsl()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory()) {
+            Session session = sessionFactory.openSession();
+            Aircrafts aircraft = Aircrafts.builder().model("Airbus").range(7500).build();
+            session.persist(aircraft);
+            AircraftsRepository airRep = new AircraftsRepository();
+            airRep.selectAircraftsByRangeMoreQueryDsl(session, 7000);
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    @Test
+    void selectAircraftsBYModelNameQueryDsl()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory()) {
+            Session session = sessionFactory.openSession();
+            Aircrafts aircraft = Aircrafts.builder().model("Airbus").range(7500).build();
+            session.persist(aircraft);
+            AircraftsRepository airRep = new AircraftsRepository();
+            airRep.selectAircraftsBYModelNameQueryDsl(session, "Airbus");
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
 }

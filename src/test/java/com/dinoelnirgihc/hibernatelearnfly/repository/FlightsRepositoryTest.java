@@ -660,5 +660,288 @@ class FlightsRepositoryTest {
         }
     }
 
+    @Test
+    void findAllFlightsQueryDsl()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory())
+        {
+            Session session = sessionFactory.openSession();
+
+            FlightsRepository FR = new FlightsRepository();
+            Aircrafts aircraft = Aircrafts.builder().model("Airbus").range(7500).build();
+
+            Airports a1 = Airports.builder()
+                    .name("Lozovo")
+                    .city(new City("Pradsk"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Russia/Moscow")
+                    .build();
+
+            Airports a2 = Airports.builder()
+                    .name("Lozavo")
+                    .city(new City("Gradsk"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Russia/Mascow")
+                    .build();
+
+            Airports a3 = Airports.builder()
+                    .name("Pozovo")
+                    .city(new City("Grads"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Rusia/Moscow")
+                    .build();
+
+            Airports a4 = Airports.builder()
+                    .name("Ltzovo")
+                    .city(new City("Graesk"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Rusqia/Moscow")
+                    .build();
+
+            Flights f1 = Flights.builder()
+                    .flightNumber("75463")
+                    .scheduledArrival(new Timestamp(new Date().getTime()))
+                    .scheduledDeparture(new Timestamp(new Date().getTime()))
+                    .actualArrival(new Timestamp(new Date().getTime()))
+                    .actualDeparture(new Timestamp(new Date().getTime()))
+                    .status("true")
+                    .airportArrival(a1)
+                    .airportArrivalCode(a2)
+                    .airportDeparture(a3)
+                    .airportDepartureCode(a4)
+                    .aircrafts(aircraft)
+                    .build();
+
+            session.persist(aircraft);
+            session.persist(a1);
+            session.persist(a2);
+            session.persist(a3);
+            session.persist(a4);
+            session.persist(f1);
+            FR.findAllFlightsQueryDsl(session);
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    @Test
+    void findFlightByFlightNumberQueryDsl()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory())
+        {
+            Session session = sessionFactory.openSession();
+
+            FlightsRepository FR = new FlightsRepository();
+            Aircrafts aircraft = Aircrafts.builder().model("Airbus").range(7500).build();
+
+            Airports a1 = Airports.builder()
+                    .name("Lozovo")
+                    .city(new City("Pradsk"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Russia/Moscow")
+                    .build();
+
+            Airports a2 = Airports.builder()
+                    .name("Lozavo")
+                    .city(new City("Gradsk"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Russia/Mascow")
+                    .build();
+
+            Airports a3 = Airports.builder()
+                    .name("Pozovo")
+                    .city(new City("Grads"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Rusia/Moscow")
+                    .build();
+
+            Airports a4 = Airports.builder()
+                    .name("Ltzovo")
+                    .city(new City("Graesk"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Rusqia/Moscow")
+                    .build();
+
+            Flights f1 = Flights.builder()
+                    .flightNumber("75463")
+                    .scheduledArrival(new Timestamp(new Date().getTime()))
+                    .scheduledDeparture(new Timestamp(new Date().getTime()))
+                    .actualArrival(new Timestamp(new Date().getTime()))
+                    .actualDeparture(new Timestamp(new Date().getTime()))
+                    .status("true")
+                    .airportArrival(a1)
+                    .airportArrivalCode(a2)
+                    .airportDeparture(a3)
+                    .airportDepartureCode(a4)
+                    .aircrafts(aircraft)
+                    .build();
+
+            session.persist(aircraft);
+            session.persist(a1);
+            session.persist(a2);
+            session.persist(a3);
+            session.persist(a4);
+            session.persist(f1);
+            FR.findFlightByFlightNumberQueryDsl(session, "75463");
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    @Test
+    void findAllFlightsByAircraftIdQueryDsl()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory())
+        {
+            Session session = sessionFactory.openSession();
+
+            FlightsRepository FR = new FlightsRepository();
+            Aircrafts aircraft = Aircrafts.builder().model("Airbus").range(7500).build();
+
+            Airports a1 = Airports.builder()
+                    .name("Lozovo")
+                    .city(new City("Pradsk"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Russia/Moscow")
+                    .build();
+
+            Airports a2 = Airports.builder()
+                    .name("Lozavo")
+                    .city(new City("Gradsk"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Russia/Mascow")
+                    .build();
+
+            Airports a3 = Airports.builder()
+                    .name("Pozovo")
+                    .city(new City("Grads"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Rusia/Moscow")
+                    .build();
+
+            Airports a4 = Airports.builder()
+                    .name("Ltzovo")
+                    .city(new City("Graesk"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Rusqia/Moscow")
+                    .build();
+
+            Flights f1 = Flights.builder()
+                    .flightNumber("75463")
+                    .scheduledArrival(new Timestamp(new Date().getTime()))
+                    .scheduledDeparture(new Timestamp(new Date().getTime()))
+                    .actualArrival(new Timestamp(new Date().getTime()))
+                    .actualDeparture(new Timestamp(new Date().getTime()))
+                    .status("true")
+                    .airportArrival(a1)
+                    .airportArrivalCode(a2)
+                    .airportDeparture(a3)
+                    .airportDepartureCode(a4)
+                    .aircrafts(aircraft)
+                    .build();
+
+            session.persist(aircraft);
+            session.persist(a1);
+            session.persist(a2);
+            session.persist(a3);
+            session.persist(a4);
+            session.persist(f1);
+            FR.findAllFlightsByAircraftIdQueryDsl(session, 1L);
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    @Test
+    void findAllFlightsByAircraftIdWithFlightNumberQueryDsl()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory())
+        {
+            Session session = sessionFactory.openSession();
+
+            FlightsRepository FR = new FlightsRepository();
+            Aircrafts aircraft = Aircrafts.builder().model("Airbus").range(7500).build();
+
+            Airports a1 = Airports.builder()
+                    .name("Lozovo")
+                    .city(new City("Pradsk"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Russia/Moscow")
+                    .build();
+
+            Airports a2 = Airports.builder()
+                    .name("Lozavo")
+                    .city(new City("Gradsk"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Russia/Mascow")
+                    .build();
+
+            Airports a3 = Airports.builder()
+                    .name("Pozovo")
+                    .city(new City("Grads"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Rusia/Moscow")
+                    .build();
+
+            Airports a4 = Airports.builder()
+                    .name("Ltzovo")
+                    .city(new City("Graesk"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Rusqia/Moscow")
+                    .build();
+
+            Flights f1 = Flights.builder()
+                    .flightNumber("75463")
+                    .scheduledArrival(new Timestamp(new Date().getTime()))
+                    .scheduledDeparture(new Timestamp(new Date().getTime()))
+                    .actualArrival(new Timestamp(new Date().getTime()))
+                    .actualDeparture(new Timestamp(new Date().getTime()))
+                    .status("true")
+                    .airportArrival(a1)
+                    .airportArrivalCode(a2)
+                    .airportDeparture(a3)
+                    .airportDepartureCode(a4)
+                    .aircrafts(aircraft)
+                    .build();
+
+            session.persist(aircraft);
+            session.persist(a1);
+            session.persist(a2);
+            session.persist(a3);
+            session.persist(a4);
+            session.persist(f1);
+            FR.findAllFlightsByAircraftIdWithFlightNumberQueryDsl(session, 1L, "75463");
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
 
 }

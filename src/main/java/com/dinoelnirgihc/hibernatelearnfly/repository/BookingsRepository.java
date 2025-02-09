@@ -1,7 +1,9 @@
 package com.dinoelnirgihc.hibernatelearnfly.repository;
 
 import com.dinoelnirgihc.hibernatelearnfly.entity.Bookings;
+import com.dinoelnirgihc.hibernatelearnfly.entity.QBookings;
 import com.dinoelnirgihc.hibernatelearnfly.entity.Tickets;
+import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -110,5 +112,51 @@ public class BookingsRepository
 
         cq.select(root).where(cb.equal(root.get("bookDate"), bookDate));
         return session.createQuery(cq).list();
+    }
+
+    public List<Bookings> findAllBookingsQueryDsl(Session session)
+    {
+        return new JPAQuery<Bookings>(session)
+                .select(QBookings.bookings)
+                .from(QBookings.bookings)
+                .where()
+                .fetch();
+    }
+
+    public List<Bookings> findBookingsByTotalAmountMoreQueryDsl(Session session, BigDecimal totalAmount)
+    {
+        return new JPAQuery<Bookings>(session)
+            .select(QBookings.bookings)
+            .from(QBookings.bookings)
+            .where(QBookings.bookings.totalAmount.gt(totalAmount))
+            .fetch();
+    }
+
+    public List<Bookings> findBookingsByTotalAmountMoreQueryDsl(Session session, BigDecimal totalAmount, int max)
+    {
+        return new JPAQuery<Bookings>(session)
+                .select(QBookings.bookings)
+                .from(QBookings.bookings)
+                .where(QBookings.bookings.totalAmount.gt(totalAmount))
+                .limit(max)
+                .fetch();
+    }
+
+    public List<Bookings> findBookingsByTotalAmountLessQueryDsl(Session session, BigDecimal totalAmount)
+    {
+        return new JPAQuery<Bookings>(session)
+                .select(QBookings.bookings)
+                .from(QBookings.bookings)
+                .where(QBookings.bookings.totalAmount.loe(totalAmount))
+                .fetch();
+    }
+
+    public List<Bookings> findBookingsByBookDateQueryDsl(Session session, Timestamp bookDate)
+    {
+        return new JPAQuery<Bookings>(session)
+                .select(QBookings.bookings)
+                .from(QBookings.bookings)
+                .where(QBookings.bookings.bookDate.eq(bookDate))
+                .fetch();
     }
 }

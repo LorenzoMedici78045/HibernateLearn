@@ -2,7 +2,10 @@ package com.dinoelnirgihc.hibernatelearnfly.repository;
 
 import com.dinoelnirgihc.hibernatelearnfly.embeddable.fareConditionsType;
 import com.dinoelnirgihc.hibernatelearnfly.entity.Aircrafts;
+import com.dinoelnirgihc.hibernatelearnfly.entity.QAircrafts;
+import com.dinoelnirgihc.hibernatelearnfly.entity.QSeats;
 import com.dinoelnirgihc.hibernatelearnfly.entity.Seats;
+import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -67,5 +70,33 @@ public class SeatsRepository
 
         cq.select(seats).where(cb.equal(root.get("id"), aircraftId));
         return session.createQuery(cq).list();
+    }
+
+    public List<Seats> findallSeatsQueryDsl(Session session)
+    {
+        return new JPAQuery<Seats>(session)
+                .select(QSeats.seats)
+                .from(QSeats.seats)
+                .where()
+                .fetch();
+    }
+
+    public List<Seats> findAllSeatByFareCondQueryDsl(Session session, fareConditionsType fareCond)
+    {
+        return new JPAQuery<Seats>(session)
+                .select(QSeats.seats)
+                .from(QSeats.seats)
+                .where(QSeats.seats.fareConditions.eq(fareCond))
+                .fetch();
+    }
+
+    public List<Seats> findAllSeatByAircraftIdQueryDsl(Session session, Long aircraftId)
+    {
+        return new JPAQuery<Seats>(session)
+                .select(QSeats.seats)
+                .from(QAircrafts.aircrafts)
+                .join(QAircrafts.aircrafts.seats)
+                .where(QAircrafts.aircrafts.id.eq(aircraftId))
+                .fetch();
     }
 }

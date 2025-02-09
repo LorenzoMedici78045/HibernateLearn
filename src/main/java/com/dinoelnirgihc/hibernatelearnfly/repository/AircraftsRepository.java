@@ -1,6 +1,7 @@
 package com.dinoelnirgihc.hibernatelearnfly.repository;
 
 import com.dinoelnirgihc.hibernatelearnfly.entity.Aircrafts;
+import com.dinoelnirgihc.hibernatelearnfly.entity.QAircrafts;
 import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -106,9 +107,45 @@ public class AircraftsRepository
         return session.createQuery(cQ).list();
     }
 
-    /*public List<Aircrafts> findAllAircraftsQueryDsl(Session session)
+   public List<Aircrafts> findAllAircraftsQueryDsl(Session session)
     {
 
-        return JPAQuery<Aircrafts>();
-    }*/
+        return new JPAQuery<Aircrafts>(session)
+                .select(QAircrafts.aircrafts)
+                .from(QAircrafts.aircrafts)
+                .fetch();
+    }
+
+    public String selectModelByIdQueryDsl(Session session,Long id)
+    {
+        return new JPAQuery<String>(session)
+                .select(QAircrafts.aircrafts.model)
+                .from(QAircrafts.aircrafts)
+                .where(QAircrafts.aircrafts.id.eq(id)).fetchFirst();
+    }
+
+    public Integer selectRangeByIdQueryDsl(Session session,Long id)
+    {
+        return new JPAQuery<Integer>(session)
+                .select(QAircrafts.aircrafts.range)
+                .from(QAircrafts.aircrafts)
+                .where(QAircrafts.aircrafts.id.eq(id)).fetchFirst();
+    }
+
+    public List<Aircrafts> selectAircraftsByRangeMoreQueryDsl(Session session,int MoreRange)
+    {
+       return new JPAQuery<Aircrafts>(session)
+               .select(QAircrafts.aircrafts)
+               .from(QAircrafts.aircrafts)
+               .where(QAircrafts.aircrafts.range.gt(MoreRange)).fetch();
+
+    }
+
+    public List<Aircrafts> selectAircraftsBYModelNameQueryDsl(Session session,String ModelName)
+    {
+        return new JPAQuery<Aircrafts>(session)
+                .select(QAircrafts.aircrafts)
+                .from(QAircrafts.aircrafts)
+                .where(QAircrafts.aircrafts.model.eq(ModelName)).fetch();
+    }
 }

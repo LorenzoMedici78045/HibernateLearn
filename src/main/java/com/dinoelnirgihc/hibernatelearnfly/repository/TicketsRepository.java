@@ -1,7 +1,10 @@
 package com.dinoelnirgihc.hibernatelearnfly.repository;
 
 import com.dinoelnirgihc.hibernatelearnfly.embeddable.User;
+import com.dinoelnirgihc.hibernatelearnfly.entity.QBookings;
+import com.dinoelnirgihc.hibernatelearnfly.entity.QTickets;
 import com.dinoelnirgihc.hibernatelearnfly.entity.Tickets;
+import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -73,5 +76,33 @@ public class TicketsRepository
 
         cq.select(root).where(cb.equal(user.get("password"), userPassword));
         return (Tickets) session.createQuery(cq).uniqueResult();
+    }
+
+    public List<Tickets> findAllTicketsQueryDsl(Session session)
+    {
+        return new JPAQuery<Tickets>(session)
+                .select(QTickets.tickets)
+                .from(QTickets.tickets)
+                .where()
+                .fetch();
+    }
+
+    public List<Tickets> findAllTicketsByBookingsIdQueryDsl(Session session, Long bookingsId)
+    {
+        return new JPAQuery<Tickets>(session)
+                .select(QTickets.tickets)
+                .from(QTickets.tickets)
+                .join(QTickets.tickets.bookings, QBookings.bookings)
+                .where(QBookings.bookings.id.eq(bookingsId))
+                .fetch();
+    }
+
+    public Tickets findTicketByUserPasswordQureyDsl(Session session, String userPassword)
+    {
+        return new JPAQuery<Tickets>(session)
+                .select(QTickets.tickets)
+                .from(QTickets.tickets)
+                .where(QTickets.tickets.user.password.eq(userPassword))
+                .fetchFirst();
     }
 }

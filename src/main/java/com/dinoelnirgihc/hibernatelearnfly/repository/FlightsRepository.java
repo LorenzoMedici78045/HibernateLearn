@@ -2,6 +2,9 @@ package com.dinoelnirgihc.hibernatelearnfly.repository;
 
 import com.dinoelnirgihc.hibernatelearnfly.entity.Bookings;
 import com.dinoelnirgihc.hibernatelearnfly.entity.Flights;
+import com.dinoelnirgihc.hibernatelearnfly.entity.QAircrafts;
+import com.dinoelnirgihc.hibernatelearnfly.entity.QFlights;
+import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -92,5 +95,43 @@ public class FlightsRepository
 
         cq.select(root).where(cb.equal(root.get("id"), aircraftId)).where(cb.equal(root.get("flightNumber"), flightNumber));
         return session.createQuery(cq).list();
+    }
+
+    public List<Flights> findAllFlightsQueryDsl(Session session)
+    {
+        return new JPAQuery<Flights>(session)
+                .select(QFlights.flights)
+                .from(QFlights.flights)
+                .where()
+                .fetch();
+    }
+
+    public Flights findFlightByFlightNumberQueryDsl(Session session, String flightNumber)
+    {
+        return new JPAQuery<Flights>(session)
+                .select(QFlights.flights)
+                .from(QFlights.flights)
+                .where(QFlights.flights.flightNumber.eq(flightNumber))
+                .fetchFirst();
+    }
+
+    public List<Flights> findAllFlightsByAircraftIdQueryDsl(Session session, Long aircraftId)
+    {
+        return new JPAQuery<Flights>(session)
+                .select(QFlights.flights)
+                .from(QAircrafts.aircrafts)
+                .join(QAircrafts.aircrafts.flights)
+                .where(QAircrafts.aircrafts.id.eq(aircraftId))
+                .fetch();
+    }
+
+    public List<Flights> findAllFlightsByAircraftIdWithFlightNumberQueryDsl(Session session, Long aircraftId ,String flightNumber)
+    {
+        return new JPAQuery<Flights>(session)
+                .select(QFlights.flights)
+                .from(QFlights.flights)
+                .join(QFlights.flights.aircrafts, QAircrafts.aircrafts)
+                .where(QAircrafts.aircrafts.id.eq(aircraftId).and(QFlights.flights.flightNumber.eq(flightNumber)))
+                .fetch();
     }
 }

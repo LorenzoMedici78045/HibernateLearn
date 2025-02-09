@@ -1,8 +1,7 @@
 package com.dinoelnirgihc.hibernatelearnfly.repository;
 
-import com.dinoelnirgihc.hibernatelearnfly.entity.Flights;
-import com.dinoelnirgihc.hibernatelearnfly.entity.Seats;
-import com.dinoelnirgihc.hibernatelearnfly.entity.TicketFlights;
+import com.dinoelnirgihc.hibernatelearnfly.entity.*;
+import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -72,5 +71,33 @@ public class TicketFlightsRepository
 
         cq.select(tikFly).where(cb.equal(root.get("id"), flightId));
         return session.createQuery(cq).list();
+    }
+
+    public List<TicketFlights> findAllTicketFlightsQueryDsl(Session session)
+    {
+        return new JPAQuery<TicketFlights>(session)
+                .select(QTicketFlights.ticketFlights)
+                .from(QTicketFlights.ticketFlights)
+                .where()
+                .fetch();
+    }
+
+    public List<TicketFlights> findAllTicketFlightsByAmountQueryDsl(Session session, BigDecimal amount)
+    {
+        return new JPAQuery<TicketFlights>(session)
+                .select(QTicketFlights.ticketFlights)
+                .from(QTicketFlights.ticketFlights)
+                .where(QTicketFlights.ticketFlights.amount.eq(amount))
+                .fetch();
+    }
+
+    public List<TicketFlights> findAllTicketFlightsByFlightIdQueryDsl(Session session, Long flightId)
+    {
+        return new JPAQuery<TicketFlights>(session)
+                .select(QTicketFlights.ticketFlights)
+                .from(QTicketFlights.ticketFlights)
+                .join(QTicketFlights.ticketFlights.flight, QFlights.flights)
+                .where(QFlights.flights.id.eq(flightId))
+                .fetch();
     }
 }

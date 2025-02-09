@@ -1,9 +1,8 @@
 package com.dinoelnirgihc.hibernatelearnfly.repository;
 
 import com.dinoelnirgihc.hibernatelearnfly.embeddable.fareConditionsType;
-import com.dinoelnirgihc.hibernatelearnfly.entity.BoardingPasses;
-import com.dinoelnirgihc.hibernatelearnfly.entity.TicketFlights;
-import com.dinoelnirgihc.hibernatelearnfly.entity.Tickets;
+import com.dinoelnirgihc.hibernatelearnfly.entity.*;
+import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -12,18 +11,15 @@ import org.hibernate.query.NativeQuery;
 
 import java.util.List;
 
-public class BoardingPassesRepository
-{
-    public List<BoardingPasses> findAllBoardingPasses(Session session)
-    {
+public class BoardingPassesRepository {
+    public List<BoardingPasses> findAllBoardingPasses(Session session) {
         session.beginTransaction();
         List<BoardingPasses> list = session.createQuery("from BoardingPasses", BoardingPasses.class).list();
         session.getTransaction().commit();
         return list;
     }
 
-    public BoardingPasses findBoarPassByBoardNumber(Session session, Long boardNumber)
-    {
+    public BoardingPasses findBoarPassByBoardNumber(Session session, Long boardNumber) {
         session.beginTransaction();
         BoardingPasses boarPass = session
                 .createQuery("select b from BoardingPasses b where b.boardingNumber = :boardNumber", BoardingPasses.class)
@@ -32,8 +28,7 @@ public class BoardingPassesRepository
         return boarPass;
     }
 
-    public BoardingPasses findBoarPassBySeatNumber(Session session, Long seatNumber)
-    {
+    public BoardingPasses findBoarPassBySeatNumber(Session session, Long seatNumber) {
         session.beginTransaction();
         BoardingPasses boarPass = session
                 .createQuery("select b from BoardingPasses b where b.seatNumber = :seatNumber", BoardingPasses.class)
@@ -42,8 +37,7 @@ public class BoardingPassesRepository
         return boarPass;
     }
 
-    public List<BoardingPasses> findBoardingPassesByTicketId(Session session, Long TicketId)
-    {
+    public List<BoardingPasses> findBoardingPassesByTicketId(Session session, Long TicketId) {
         session.beginTransaction();
         List<BoardingPasses> bP = session.createQuery("select bp from BoardingPasses bp" +
                         " join bp.ticket tf join tf.ticket t where t.id = :TicketId", BoardingPasses.class)
@@ -52,8 +46,7 @@ public class BoardingPassesRepository
         return bP;
     }
 
-    public List<BoardingPasses> findAllBoardingPassesCriteria(Session session)
-    {
+    public List<BoardingPasses> findAllBoardingPassesCriteria(Session session) {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<BoardingPasses> cq = cb.createQuery(BoardingPasses.class);
         Root<BoardingPasses> root = cq.from(BoardingPasses.class);
@@ -62,8 +55,7 @@ public class BoardingPassesRepository
         return session.createQuery(cq).list();
     }
 
-    public BoardingPasses findBoarPassByBoardNumberCriteria(Session session, Long boardNumber)
-    {
+    public BoardingPasses findBoarPassByBoardNumberCriteria(Session session, Long boardNumber) {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<BoardingPasses> cq = cb.createQuery(BoardingPasses.class);
         Root<BoardingPasses> root = cq.from(BoardingPasses.class);
@@ -72,8 +64,7 @@ public class BoardingPassesRepository
         return session.createQuery(cq).uniqueResult();
     }
 
-    public BoardingPasses findBoarPassBySeatNumberCriteria(Session session, Long seatNumber)
-    {
+    public BoardingPasses findBoarPassBySeatNumberCriteria(Session session, Long seatNumber) {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<BoardingPasses> cq = cb.createQuery(BoardingPasses.class);
         Root root = cq.from(BoardingPasses.class);
@@ -82,8 +73,7 @@ public class BoardingPassesRepository
         return session.createQuery(cq).uniqueResult();
     }
 
-    public List<BoardingPasses> findBoardingPassesByTicketIdCriteria(Session session, Long TicketId)
-    {
+    public List<BoardingPasses> findBoardingPassesByTicketIdCriteria(Session session, Long TicketId) {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(BoardingPasses.class);
         Root root = cq.from(Tickets.class);
@@ -94,5 +84,39 @@ public class BoardingPassesRepository
         cq.select(boarPas).where(cb.equal(root.get("id"), TicketId));
 
         return session.createQuery(cq).list();
+    }
+
+    public List<BoardingPasses> findAllBoardingPassesQueryDsl(Session session) {
+        return new JPAQuery<BoardingPasses>(session)
+                .select(QBoardingPasses.boardingPasses)
+                .from(QBoardingPasses.boardingPasses)
+                .where()
+                .fetch();
+    }
+
+    public BoardingPasses findBoarPassByBoardNumberQueryDsl(Session session, Long boardNumber) {
+        return new JPAQuery<BoardingPasses>(session)
+                .select(QBoardingPasses.boardingPasses)
+                .from(QBoardingPasses.boardingPasses)
+                .where()
+                .fetchFirst();
+    }
+
+    public BoardingPasses findBoarPassBySeatNumberQueryDsl(Session session, Long seatNumber) {
+        return new JPAQuery<BoardingPasses>(session)
+                .select(QBoardingPasses.boardingPasses)
+                .from(QBoardingPasses.boardingPasses)
+                .where(QBoardingPasses.boardingPasses.seatNumber.eq(seatNumber))
+                .fetchFirst();
+    }
+
+    public List<BoardingPasses> findBoardingPassesByTicketIdQueryDsl(Session session, Long TicketId) {
+        return new JPAQuery<BoardingPasses>(session)
+                .select(QBoardingPasses.boardingPasses)
+                .from(QTickets.tickets)
+                .join(QTickets.tickets.ticketFlights)
+                .join(QTicketFlights.ticketFlights.boardingPasses)
+                .where(QTickets.tickets.id.eq(TicketId))
+                .fetch();
     }
 }

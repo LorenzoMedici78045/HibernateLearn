@@ -243,4 +243,104 @@ class SeatsRepositoryTest {
             throw new ExceptionInInitializerError(e);
         }
     }
+
+    @Test
+    void findallSeatsQueryDsl()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory())
+        {
+            Session session = sessionFactory.openSession();
+
+            SeatsRepository sR = new SeatsRepository();
+            Aircrafts aircraft1 = Aircrafts.builder().model("Airbus").range(7500).build();
+            Aircrafts aircraft2 = Aircrafts.builder().model("Airbus").range(10500).build();
+
+            Seats seats = Seats.builder()
+                    .id(new SeatsId(1L, 1L))
+                    .aircraft(aircraft1)
+                    .aircraftAircraft(aircraft2)
+                    .fareConditions(fareConditionsType.BUSINESS)
+                    .build();
+
+            session.persist(aircraft1);
+            session.persist(aircraft2);
+            session.persist(seats);
+            sR.findallSeatsQueryDsl(session);
+
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    @Test
+    void findAllSeatByFareCondQueryDsl()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory())
+        {
+            Session session = sessionFactory.openSession();
+
+            SeatsRepository sR = new SeatsRepository();
+            Aircrafts aircraft1 = Aircrafts.builder().model("Airbus").range(7500).build();
+            Aircrafts aircraft2 = Aircrafts.builder().model("Airbus").range(10500).build();
+
+            Seats seats = Seats.builder()
+                    .id(new SeatsId(1L, 1L))
+                    .aircraft(aircraft1)
+                    .aircraftAircraft(aircraft2)
+                    .fareConditions(fareConditionsType.BUSINESS)
+                    .build();
+
+            session.persist(aircraft1);
+            session.persist(aircraft2);
+            session.persist(seats);
+            sR.findAllSeatByFareCondQueryDsl(session, fareConditionsType.BUSINESS);
+
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    @Test
+    void findAllSeatByAircraftIdQueryDsl()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory())
+        {
+            Session session = sessionFactory.openSession();
+
+            SeatsRepository sR = new SeatsRepository();
+            Aircrafts aircraft1 = Aircrafts.builder().model("Airbus").range(7500).seats(new ArrayList<Seats>()).build();
+            Aircrafts aircraft2 = Aircrafts.builder().model("Airbus").range(10500).seats(new ArrayList<Seats>()).build();
+
+            Seats seats = Seats.builder()
+                    .id(new SeatsId(1L, 1L))
+                    .aircraft(aircraft1)
+                    .aircraftAircraft(aircraft2)
+                    .fareConditions(fareConditionsType.BUSINESS)
+                    .build();
+
+            session.persist(aircraft1);
+            session.persist(aircraft2);
+            session.persist(seats);
+            aircraft1.addSeats(seats);
+            aircraft2.addSeats(seats);
+            seats.setAircraft(aircraft1);
+            session.merge(aircraft1);
+            session.merge(aircraft2);
+            session.merge(seats);
+
+            sR.findAllSeatByAircraftIdQueryDsl(session, 1L);
+
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
 }
