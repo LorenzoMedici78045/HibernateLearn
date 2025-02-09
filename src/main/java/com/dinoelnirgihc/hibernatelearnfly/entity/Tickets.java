@@ -15,6 +15,11 @@ import java.util.List;
 /**
  Класс Билеты отражает сущность Tickets. Отражает информацию о билетах.
  * */
+@NamedEntityGraph(
+        name = "withTicketFlightandBoarPass",
+        attributeNodes = {@NamedAttributeNode(value = "ticketFlights", subgraph = "tickFly")},
+        subgraphs = {@NamedSubgraph(name = "tickFly", attributeNodes = @NamedAttributeNode("boardingPasses"))}
+)
 @Data
 @Entity
 @AllArgsConstructor

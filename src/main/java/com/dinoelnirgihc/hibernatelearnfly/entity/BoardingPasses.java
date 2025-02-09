@@ -3,6 +3,7 @@ package com.dinoelnirgihc.hibernatelearnfly.entity;
 import com.dinoelnirgihc.hibernatelearnfly.embeddable.BoardingPassesId;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import jdk.jfr.Name;
 import lombok.*;
 
 import java.io.Serializable;
@@ -13,6 +14,12 @@ import java.io.Serializable;
 @Entity
 @Data
 @AllArgsConstructor
+@NamedEntityGraph(
+       name = "withTickFlight",
+        attributeNodes = {
+               @NamedAttributeNode(value = "ticket")
+        }
+)
 @NoArgsConstructor
 @Builder
 @Table(name = "BOARDING_PASSES")
@@ -27,7 +34,7 @@ public class BoardingPasses implements Serializable
     @Column(name = "SEAT_NO", nullable = false)
     private Long seatNumber;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(name = "TICKET_NO",
                     insertable=false, updatable=false),

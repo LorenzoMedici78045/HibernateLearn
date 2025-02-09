@@ -9,6 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Класс Самолеты отражает сущность  aircrafts. Содержит информацию о модели и дальности ее перелета*/
+
+@NamedEntityGraph(
+        name = "withFlight",
+        attributeNodes = {@NamedAttributeNode(value = "flights", subgraph = "airport")}
+        ,subgraphs = {@NamedSubgraph(name = "airport", attributeNodes = @NamedAttributeNode("airportArrival"))}
+)
 @Entity
 @Data
 @NoArgsConstructor

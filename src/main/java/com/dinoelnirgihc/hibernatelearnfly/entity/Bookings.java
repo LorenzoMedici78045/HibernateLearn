@@ -14,6 +14,11 @@ import java.util.List;
 import java.util.Set;
 
 /** Класс Бронирования отражает сущность  bookings. Содержит информацию о дате, времени и стоимости полета*/
+@NamedEntityGraph(
+        name = "withTicketList",
+        attributeNodes = {@NamedAttributeNode(value = "ticketsList", subgraph = "tickets")},
+        subgraphs = {@NamedSubgraph(name = "tickets", attributeNodes = @NamedAttributeNode("ticketFlights"))}
+)
 @Entity
 @Data
 @AllArgsConstructor
