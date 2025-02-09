@@ -3,6 +3,9 @@ package com.dinoelnirgihc.hibernatelearnfly.repository;
 import com.dinoelnirgihc.hibernatelearnfly.embeddable.User;
 import com.dinoelnirgihc.hibernatelearnfly.entity.Tickets;
 import jakarta.persistence.Query;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -38,5 +41,37 @@ public class TicketsRepository
                 " where t.user = :u", Tickets.class)
                 .setParameter("u", u).uniqueResult();
         return t;
+    }
+
+    public List<Tickets> findAllTicketsCriteria(Session session)
+    {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Tickets> cq = cb.createQuery(Tickets.class);
+        Root<Tickets> root = cq.from(Tickets.class);
+
+        cq.select(root);
+        return session.createQuery(cq).list();
+    }
+
+    public List<Tickets> findAllTicketsByBookingsIdCriteria(Session session, Long bookingsId)
+    {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Tickets> cq = cb.createQuery(Tickets.class);
+        Root<Tickets> root = cq.from(Tickets.class);
+        root.join("bookings");
+
+        cq.select(root).where(cb.equal(root.get("id"), bookingsId));
+        return session.createQuery(cq).list();
+    }
+
+    public Tickets findTicketByUserPasswordCriteria(Session session, String userPassword)
+    {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery(Tickets.class);
+        Root root = cq.from(Tickets.class);
+        var user = root.join("user");
+
+        cq.select(root).where(cb.equal(user.get("password"), userPassword));
+        return (Tickets) session.createQuery(cq).uniqueResult();
     }
 }

@@ -2,8 +2,12 @@ package com.dinoelnirgihc.hibernatelearnfly.repository;
 
 import com.dinoelnirgihc.hibernatelearnfly.entity.Bookings;
 import com.dinoelnirgihc.hibernatelearnfly.entity.Tickets;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 
+import javax.swing.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
@@ -58,4 +62,53 @@ public class BookingsRepository
         return list;
     }
 
+    public List<Bookings> findAllBookingsCriteria(Session session)
+    {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Bookings> cq = cb.createQuery(Bookings.class);
+        Root<Bookings> root = cq.from(Bookings.class);
+        cq.select(root);
+
+        return session.createQuery(cq).list();
+    }
+
+    public List<Bookings> findBookingsByTotalAmountMoreCriteria(Session session, BigDecimal totalAmount)
+    {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Bookings> cq = cb.createQuery(Bookings.class);
+        Root<Bookings> root = cq.from(Bookings.class);
+
+        cq.select(root).where(cb.greaterThan(root.get("totalAmount"), totalAmount));
+        return session.createQuery(cq).list();
+    }
+
+    public List<Bookings> findBookingsByTotalAmountMoreCriteria(Session session, BigDecimal totalAmount, int max)
+    {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Bookings> cq = cb.createQuery(Bookings.class);
+        Root<Bookings> root = cq.from(Bookings.class);
+
+        cq.select(root).where(cb.greaterThan(root.get("totalAmount"), totalAmount));
+        return session.createQuery(cq).setMaxResults(max).list();
+    }
+
+    public List<Bookings> findBookingsByTotalAmountLessCriteria(Session session, BigDecimal totalAmount)
+    {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Bookings> cq = cb.createQuery(Bookings.class);
+        Root<Bookings> root = cq.from(Bookings.class);
+
+        cq.select(root).where(cb.lessThan(root.get("totalAmount"), totalAmount));
+        return session.createQuery(cq).list();
+    }
+
+    public List<Bookings> findBookingsByBookDateCriteria(Session session, Timestamp bookDate)
+    {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Bookings> cq = cb.createQuery(Bookings.class);
+        Root<Bookings> root = cq.from(Bookings.class);
+
+        cq.select(root).where(cb.equal(root.get("bookDate"), bookDate));
+        return session.createQuery(cq).list();
+    }
 }

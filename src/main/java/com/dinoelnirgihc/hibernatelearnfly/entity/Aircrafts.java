@@ -38,4 +38,9 @@ public class Aircrafts implements Serializable
     @OneToMany(mappedBy = "aircraftAircraft", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Seats> seatsSeats = new ArrayList<>();
 
+    public void addSeats(Seats seat)
+    {
+        this.seats.add(seat);
+        seat.setAircraft(this);
+    }
 }

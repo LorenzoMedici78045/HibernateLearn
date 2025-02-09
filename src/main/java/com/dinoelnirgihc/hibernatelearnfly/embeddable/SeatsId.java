@@ -6,11 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Embeddable
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SeatsId
+public class SeatsId implements Serializable
 {
     @Column(name = "AIRCRAFT_CODE")
     private Long aircraftId;

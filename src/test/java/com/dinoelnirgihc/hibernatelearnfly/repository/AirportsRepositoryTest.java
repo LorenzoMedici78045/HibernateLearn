@@ -160,4 +160,124 @@ class AirportsRepositoryTest {
             throw new ExceptionInInitializerError(e);
         }
     }
+
+    @Test
+    void selectAllAirportsCriteria()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory())
+        {
+            Session session = sessionFactory.openSession();
+            AirportsRepository AR = new AirportsRepository();
+            Airports airport = Airports.builder()
+                    .name("Lozovo")
+                    .city(new City("Gradsk"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Russia/Moscow")
+                    .build();
+            session.persist(airport);
+            AR.selectAllAirportsCriteria(session);
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    @Test
+    void returnAirportByNameCriteria()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory())
+        {
+            Session session = sessionFactory.openSession();
+            AirportsRepository AR = new AirportsRepository();
+            Airports airport = Airports.builder()
+                    .name("Lozovo")
+                    .city(new City("Gradsk"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Russia/Moscow")
+                    .build();
+            session.persist(airport);
+            AR.returnAirportByNameCriteria(session, "Lozovo");
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    @Test
+    void selectAllAirportsByTimezoneCriteria()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory())
+        {
+            Session session = sessionFactory.openSession();
+            AirportsRepository AR = new AirportsRepository();
+            Airports airport = Airports.builder()
+                    .name("Lozovo")
+                    .city(new City("Gradsk"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Russia/Moscow")
+                    .build();
+            session.persist(airport);
+            AR.selectAllAirportsByTimezoneCriteria(session, "Russia/Moscow");
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    @Test
+    void selectAllAirportsByTimezoneMaxCriteria()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory())
+        {
+            Session session = sessionFactory.openSession();
+            AirportsRepository AR = new AirportsRepository();
+            Airports airport = Airports.builder()
+                    .name("Lozovo")
+                    .city(new City("Gradsk"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Russia/Moscow")
+                    .build();
+            session.persist(airport);
+            AR.selectAllAirportsByTimezoneMaxCriteria(session, "Russia/Moscow", 5);
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    @Test
+    void selectAllAirportsByCityCriteria()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory())
+        {
+            Session session = sessionFactory.openSession();
+            AirportsRepository AR = new AirportsRepository();
+            Airports airport = Airports.builder()
+                    .name("Lozovo")
+                    .city(new City("Gradsk"))
+                    .latitude(53456)
+                    .longitude(76321)
+                    .timezone("Russia/Moscow")
+                    .build();
+            session.persist(airport);
+            AR.selectAllAirportsByCityCriteria(session, airport.getCity());
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
 }

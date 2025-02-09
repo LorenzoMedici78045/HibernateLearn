@@ -183,4 +183,124 @@ class TicketsRepositoryTest {
             throw new ExceptionInInitializerError(e);
         }
     }
+
+    @Test
+    void findAllTicketsCriteria()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory())
+        {
+            Session session = sessionFactory.openSession();
+
+            TicketsRepository tR = new TicketsRepository();
+            User u1 = new User("A", "123", ContactData.builder()
+                    .email("sus@mail.ru")
+                    .phone("+79185736450").build());
+
+            Bookings b1 = Bookings.builder()
+                    .totalAmount(new BigDecimal(100567))
+                    .bookDate(new Timestamp(new Date().getTime()))
+                    .build();
+
+            Bookings b2 = Bookings.builder()
+                    .totalAmount(new BigDecimal(100567))
+                    .bookDate(new Timestamp(new Date().getTime()))
+                    .build();
+
+            Tickets t1 = Tickets.builder()
+                    .user(u1)
+                    .bookings(b1)
+                    .bookingsBook(b2)
+                    .build();
+
+            session.persist(b1);
+            session.persist(b2);
+            session.persist(t1);
+            tR.findAllTicketsCriteria(session);
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    @Test
+    void findAllTicketsByBookingsIdCriteria()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory())
+        {
+            Session session = sessionFactory.openSession();
+
+            TicketsRepository tR = new TicketsRepository();
+            User u1 = new User("A", "123", ContactData.builder()
+                    .email("sus@mail.ru")
+                    .phone("+79185736450").build());
+
+            Bookings b1 = Bookings.builder()
+                    .totalAmount(new BigDecimal(100567))
+                    .bookDate(new Timestamp(new Date().getTime()))
+                    .build();
+
+            Bookings b2 = Bookings.builder()
+                    .totalAmount(new BigDecimal(100567))
+                    .bookDate(new Timestamp(new Date().getTime()))
+                    .build();
+
+            Tickets t1 = Tickets.builder()
+                    .user(u1)
+                    .bookings(b1)
+                    .bookingsBook(b2)
+                    .build();
+
+            session.persist(b1);
+            session.persist(b2);
+            session.persist(t1);
+            tR.findAllTicketsByBookingsIdCriteria(session, 1L);
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    @Test
+    void findTicketByUserPasswordCriteria()
+    {
+        try(SessionFactory sessionFactory = HibernateTestUtil.buildSessionFactory())
+        {
+            Session session = sessionFactory.openSession();
+
+            TicketsRepository tR = new TicketsRepository();
+            User u1 = new User("A", "123", ContactData.builder()
+                    .email("sus@mail.ru")
+                    .phone("+79185736450").build());
+
+            Bookings b1 = Bookings.builder()
+                    .totalAmount(new BigDecimal(100567))
+                    .bookDate(new Timestamp(new Date().getTime()))
+                    .build();
+
+            Bookings b2 = Bookings.builder()
+                    .totalAmount(new BigDecimal(100567))
+                    .bookDate(new Timestamp(new Date().getTime()))
+                    .build();
+
+            Tickets t1 = Tickets.builder()
+                    .user(u1)
+                    .bookings(b1)
+                    .bookingsBook(b2)
+                    .build();
+
+            session.persist(b1);
+            session.persist(b2);
+            session.persist(t1);
+            tR.findTicketByUserPasswordCriteria(session, u1.getPassword());
+        }
+        catch(Exception e)
+        {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
 }
