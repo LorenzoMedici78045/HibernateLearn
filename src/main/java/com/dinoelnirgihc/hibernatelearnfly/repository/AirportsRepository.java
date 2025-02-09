@@ -12,8 +12,15 @@ import org.hibernate.Session;
 
 import java.util.List;
 
+/**
+ * Репозиторий сущности Аэропорты, хранящий методы взаимодействия с БД
+ * */
 public class AirportsRepository
 {
+    /**
+     * Метод возвращает все аэропорты
+     * @return ArrayList всех аэропортов
+     * */
     public List<Airports> selectAllAirports(Session session)
     {
         session.beginTransaction();
@@ -22,6 +29,10 @@ public class AirportsRepository
         return list;
     }
 
+    /**
+     * Метод возвращает аэропорт по его названию
+     * @return Airports
+     * */
     public Airports returnAirportByName(Session session, String name)
     {
         session.beginTransaction();
@@ -31,6 +42,10 @@ public class AirportsRepository
         return airport;
     }
 
+    /**
+     * Метод возвращает все аэропорты по их временной зоне
+     * @return ArrayList всех аэропортов
+     * */
     public List<Airports> selectAllAirportsByTimezone(Session session, String Timezone)
     {
         session.beginTransaction();
@@ -40,6 +55,10 @@ public class AirportsRepository
         return airports;
     }
 
+    /**
+     * Метод возвращает определенное кол-во аэропортов по их временной зоне
+     * @return ArrayList всех аэропортов
+     * */
     public List<Airports> selectAllAirportsByTimezoneMax(Session session, String Timezone, int max)
     {
         session.beginTransaction();
@@ -49,6 +68,10 @@ public class AirportsRepository
         return airports;
     }
 
+    /**
+     * Методы возвращает все аэропорты, находящиеся в данном городе
+     * @return ArrayList всех аэропортов
+     * */
     public List<Airports> selectAllAirportsByCity(Session session, City City)
     {
         session.beginTransaction();

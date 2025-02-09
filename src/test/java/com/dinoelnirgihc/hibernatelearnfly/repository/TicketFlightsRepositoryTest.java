@@ -1,7 +1,7 @@
 package com.dinoelnirgihc.hibernatelearnfly.repository;
 
 import com.dinoelnirgihc.hibernatelearnfly.converterClasses.City;
-import com.dinoelnirgihc.hibernatelearnfly.embeddable.ContactData;
+import com.dinoelnirgihc.hibernatelearnfly.converterClasses.ContactData;
 import com.dinoelnirgihc.hibernatelearnfly.embeddable.TicketFlightsId;
 import com.dinoelnirgihc.hibernatelearnfly.embeddable.User;
 import com.dinoelnirgihc.hibernatelearnfly.embeddable.fareConditionsType;
@@ -14,8 +14,6 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class TicketFlightsRepositoryTest {
 

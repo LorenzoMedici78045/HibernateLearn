@@ -1,11 +1,11 @@
 package com.dinoelnirgihc.hibernatelearnfly.embeddable;
 
 import com.dinoelnirgihc.hibernatelearnfly.converter.ContactDataConverter;
+import com.dinoelnirgihc.hibernatelearnfly.converterClasses.ContactData;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.UniqueElements;
 /** Embeddable класс класса-сущности Tickets*/
 @Embeddable

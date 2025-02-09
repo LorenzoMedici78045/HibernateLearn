@@ -1,6 +1,7 @@
 package com.dinoelnirgihc.hibernatelearnfly.repository;
 
 import com.dinoelnirgihc.hibernatelearnfly.converterClasses.City;
+import com.dinoelnirgihc.hibernatelearnfly.converterClasses.ContactData;
 import com.dinoelnirgihc.hibernatelearnfly.embeddable.*;
 import com.dinoelnirgihc.hibernatelearnfly.entity.*;
 import com.dinoelnirgihc.hibernatelearnfly.util.HibernateTestUtil;
@@ -11,11 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class BoardingPassesRepositoryTest {
 

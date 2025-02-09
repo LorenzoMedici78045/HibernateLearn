@@ -11,9 +11,16 @@ import org.hibernate.SessionFactory;
 
 import java.util.List;
 
+/**
+ * Репозиторий сущности Самолеты, хранящий методы взаимодействия с БД
+ * */
 public class AircraftsRepository
 {
 
+    /**
+     * Метод возвращает все самолеты
+     * @return ArrayList всех самолетов
+     * */
     public List<Aircrafts> findAllAircrafts(Session session)
     {
         session.beginTransaction();
@@ -22,6 +29,10 @@ public class AircraftsRepository
         return list;
     }
 
+    /**
+     * Метод возвращает модель самолета по его id
+     * @return String модель
+     * */
     public String selectModelById(Session session,Long id)
     {
         session.beginTransaction();
@@ -30,6 +41,10 @@ public class AircraftsRepository
         return aircrafts.getModel();
     }
 
+    /**
+     * Метод возвращает дальность полета самолета по его id
+     * @return Integer дальность
+     * */
     public Integer selectRangeById(Session session,Long id)
     {
         session.beginTransaction();
@@ -38,6 +53,10 @@ public class AircraftsRepository
         return aircrafts.getRange();
     }
 
+    /**
+     * Метод возвращает все самолеты, чья дальность полета выше указанного значения
+     * @return ArrayList всех самолетов
+     * */
     public List<Aircrafts> selectAircraftsByRangeMore(Session session,int MoreRange)
     {
         session.beginTransaction();
@@ -46,7 +65,10 @@ public class AircraftsRepository
                         .setParameter("MoreRange", MoreRange).getResultList();
         return aircraftsRangeMore;
     }
-
+    /**
+     * Метод возвращает все самолеты данной модели
+     * @return ArrayList всех самолетов
+     * */
     public List<Aircrafts> selectAircraftsBYModelName(Session session,String ModelName)
     {
         session.beginTransaction();

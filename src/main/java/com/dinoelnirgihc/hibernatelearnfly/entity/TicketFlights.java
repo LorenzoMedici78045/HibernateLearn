@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- Класс Перелеты отражает сущность TICKET_FLIGHTS.
+ Класс ПерелетыПоБилету отражает сущность TICKET_FLIGHTS.
  * */
 @Entity
 @Data

@@ -12,9 +12,15 @@ import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 
 import java.util.List;
-
+/**
+ * Репозиторий сущности Билет, хранящий методы взаимодействия с БД
+ * */
 public class TicketsRepository
 {
+    /**
+     * Метод возвращает все билеты
+     * @return ArrayList всех билетов
+     * */
     public List<Tickets> findAllTickets(Session session)
     {
         session.beginTransaction();
@@ -22,7 +28,10 @@ public class TicketsRepository
         session.getTransaction().commit();
         return tickets;
     }
-
+    /**
+     * Метод возвращает все билетов, которые соответсвуют определенной сессии бронирования
+     * @return ArrayList всех билетов
+     * */
     public List<Tickets> findAllTicketsByBookingsId(Session session, Long bookingsId)
     {
         session.beginTransaction();
@@ -34,7 +43,10 @@ public class TicketsRepository
         session.getTransaction().commit();
         return list;
     }
-
+    /**
+     * Метод возвращает билет, которые соответсвуют определенным данным паспорта
+     * @return Ticket
+     * */
     public Tickets findTicketByUserPassword(Session session, String userPassword)
     {
         session.beginTransaction();

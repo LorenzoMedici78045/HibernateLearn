@@ -11,8 +11,15 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Репозиторий сущности ПерелетыПоБилету, хранящий методы взаимодействия с БД
+ * */
 public class TicketFlightsRepository
 {
+    /**
+     * Метод возвращает все перелеты
+     * @return ArrayList всех перелетов
+     * */
     public List<TicketFlights> findAllTicketFlights(Session session)
     {
         session.beginTransaction();
@@ -21,6 +28,10 @@ public class TicketFlightsRepository
         return list;
     }
 
+    /**
+     * Метод возвращает все перелеты, чья стоимость соответсвует указанной
+     * @return ArrayList всех места
+     * */
     public List<TicketFlights> findAllTicketFlightsByAmount(Session session, BigDecimal amount)
     {
         session.beginTransaction();
@@ -31,6 +42,10 @@ public class TicketFlightsRepository
         return list;
     }
 
+    /**
+     * Метод возвращает все перелеты, соответсвующие указанному перелету
+     * @return ArrayList всех места
+     * */
     public List<TicketFlights> findAllTicketFlightsByFlightId(Session session, Long flightId)
     {
         session.beginTransaction();

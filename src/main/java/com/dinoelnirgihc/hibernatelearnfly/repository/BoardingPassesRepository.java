@@ -10,8 +10,15 @@ import org.hibernate.Session;
 import org.hibernate.query.NativeQuery;
 
 import java.util.List;
-
+/**
+ * Репозиторий сущности ПосадочныеТалоны, хранящий методы взаимодействия с БД
+ * */
 public class BoardingPassesRepository {
+
+    /**
+     * Метод возвращает все талоны
+     * @return ArrayList всех талонов
+     * */
     public List<BoardingPasses> findAllBoardingPasses(Session session) {
         session.beginTransaction();
         List<BoardingPasses> list = session.createQuery("from BoardingPasses", BoardingPasses.class).list();
@@ -19,6 +26,10 @@ public class BoardingPassesRepository {
         return list;
     }
 
+    /**
+     * Метод возвращает талон по его номеру
+     * @return BoardingPasses
+     * */
     public BoardingPasses findBoarPassByBoardNumber(Session session, Long boardNumber) {
         session.beginTransaction();
         BoardingPasses boarPass = session
@@ -27,7 +38,10 @@ public class BoardingPassesRepository {
         session.getTransaction().commit();
         return boarPass;
     }
-
+    /**
+     * Метод возвращает талон по номеру места
+     * @return BoardingPasses
+     * */
     public BoardingPasses findBoarPassBySeatNumber(Session session, Long seatNumber) {
         session.beginTransaction();
         BoardingPasses boarPass = session
@@ -37,6 +51,10 @@ public class BoardingPassesRepository {
         return boarPass;
     }
 
+    /**
+     * Метод возвращает все талоны, принадлежащие билету, по его id
+     * @return ArrayList всех талонов
+     * */
     public List<BoardingPasses> findBoardingPassesByTicketId(Session session, Long TicketId) {
         session.beginTransaction();
         List<BoardingPasses> bP = session.createQuery("select bp from BoardingPasses bp" +

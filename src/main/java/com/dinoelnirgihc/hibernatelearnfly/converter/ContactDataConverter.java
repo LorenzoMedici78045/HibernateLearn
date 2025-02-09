@@ -1,7 +1,6 @@
 package com.dinoelnirgihc.hibernatelearnfly.converter;
 
-import com.dinoelnirgihc.hibernatelearnfly.converterClasses.City;
-import com.dinoelnirgihc.hibernatelearnfly.embeddable.ContactData;
+import com.dinoelnirgihc.hibernatelearnfly.converterClasses.ContactData;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

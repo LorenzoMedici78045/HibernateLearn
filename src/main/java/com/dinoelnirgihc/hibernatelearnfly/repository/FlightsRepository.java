@@ -12,8 +12,15 @@ import org.hibernate.Session;
 
 import java.util.List;
 
+/**
+ * Репозиторий сущности Перелеты, хранящий методы взаимодействия с БД
+ * */
 public class FlightsRepository
 {
+    /**
+     * Метод возвращает все перелеты
+     * @return ArrayList всех перелетов
+     * */
     public List<Flights> findAllFlights(Session session)
     {
         session.beginTransaction();
@@ -21,7 +28,10 @@ public class FlightsRepository
         session.getTransaction().commit();
         return flights;
     }
-
+    /**
+     * Метод возвращает перелет по его номеру
+     * @return Flights
+     * */
     public Flights findFlightByFlightNumber(Session session, String flightNumber)
     {
         session.beginTransaction();
@@ -31,7 +41,10 @@ public class FlightsRepository
         session.getTransaction().commit();
         return flight;
     }
-
+    /**
+     * Метод возвращает все перелеты, соответсвующие определенному самолету
+     * @return ArrayList всех перелетов
+     * */
     public List<Flights> findAllFlightsByAircraftId(Session session, Long aircraftId)
     {
         session.beginTransaction();
@@ -42,7 +55,10 @@ public class FlightsRepository
         session.getTransaction().commit();
         return aircraftFlights;
     }
-
+    /**
+     * Метод возвращает все перелеты, соответсвующие определенному самолету и определенному номеру перелета
+     * @return ArrayList всех перелетов
+     * */
     public List<Flights> findAllFlightsByAircraftIdWithFlightNumber(Session session, Long aircraftId ,String flightNumber)
     {
         session.beginTransaction();

@@ -14,8 +14,15 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
+/**
+ * Репозиторий сущности Бронирования, хранящий методы взаимодействия с БД
+ * */
 public class BookingsRepository
 {
+    /**
+     * Метод возвращает все бронирования
+     * @return ArrayList всех бронирований
+     * */
     public List<Bookings> findAllBookings(Session session)
     {
         session.beginTransaction();
@@ -24,6 +31,10 @@ public class BookingsRepository
         return bookings;
     }
 
+    /**
+     * Метод возвращает все бронирования, чья стоимость выше указанной
+     * @return ArrayList всех бронирований
+     * */
     public List<Bookings> findBookingsByTotalAmountMore(Session session, BigDecimal totalAmount)
     {
         session.beginTransaction();
@@ -33,7 +44,10 @@ public class BookingsRepository
         session.getTransaction().commit();
         return list;
     }
-
+    /**
+     * Метод возвращает указанное ко-во бронирований, чья стоимость выше указанной
+     * @return ArrayList всех бронирований
+     * */
     public List<Bookings> findBookingsByTotalAmountMore(Session session, BigDecimal totalAmount, int max)
     {
         session.beginTransaction();
@@ -43,7 +57,10 @@ public class BookingsRepository
         session.getTransaction().commit();
         return list;
     }
-
+    /**
+     * Метод возвращает указанное ко-во бронирований, чья стоимость ниже указанной
+     * @return ArrayList всех бронирований
+     * */
     public List<Bookings> findBookingsByTotalAmountLess(Session session, BigDecimal totalAmount)
     {
         session.beginTransaction();
@@ -53,7 +70,10 @@ public class BookingsRepository
         session.getTransaction().commit();
         return list;
     }
-
+    /**
+     * Метод возвращает все бронирования, определенной даты
+     * @return ArrayList всех бронирований
+     * */
     public List<Bookings> findBookingsByBookDate(Session session, Timestamp bookDate)
     {
         session.beginTransaction();

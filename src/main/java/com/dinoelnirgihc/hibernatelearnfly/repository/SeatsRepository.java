@@ -13,8 +13,15 @@ import org.hibernate.Session;
 
 import java.util.List;
 
+/**
+ * Репозиторий сущности Места, хранящий методы взаимодействия с БД
+ * */
 public class SeatsRepository
 {
+    /**
+     * Метод возвращает все места
+     * @return ArrayList всех мест
+     * */
     public List<Seats> findallSeats(Session session)
     {
         session.beginTransaction();
@@ -22,7 +29,10 @@ public class SeatsRepository
         session.getTransaction().commit();
         return list;
     }
-
+    /**
+     * Метод возвращает все места, соответсвующие определенному уровню комфорта
+     * @return ArrayList всех места
+     * */
     public List<Seats> findAllSeatByFareCond(Session session, fareConditionsType fareCond)
     {
         session.beginTransaction();
@@ -31,7 +41,10 @@ public class SeatsRepository
                 .setParameter("fareCond", fareCond).list();
         return list;
     }
-
+    /**
+     * Метод возвращает все места, соответсвующие определенному самолету
+     * @return ArrayList всех места
+     * */
     public List<Seats> findAllSeatByAircraftId(Session session, Long aircraftId)
     {
         session.beginTransaction();
