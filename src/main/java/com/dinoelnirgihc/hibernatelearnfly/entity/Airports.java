@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.envers.Audited;
@@ -25,6 +26,7 @@ import java.util.List;
 @Builder
 @Table(name = "AIRPORTS")
 @Audited
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "Airports")
 @OptimisticLocking(type = OptimisticLockType.VERSION)
 public class Airports implements Serializable
 {

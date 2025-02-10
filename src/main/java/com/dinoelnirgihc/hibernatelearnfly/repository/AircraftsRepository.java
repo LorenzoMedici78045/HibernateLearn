@@ -24,7 +24,11 @@ public class AircraftsRepository
     public List<Aircrafts> findAllAircrafts(Session session)
     {
         session.beginTransaction();
-        List<Aircrafts> list = session.createQuery("from Aircrafts", Aircrafts.class).setReadOnly(true).list();
+        List<Aircrafts> list = session.createQuery("from Aircrafts", Aircrafts.class)
+                .setReadOnly(true)
+                .setCacheable(true)
+                .setCacheRegion("Query")
+                .list();
         session.getTransaction().commit();
         return list;
     }

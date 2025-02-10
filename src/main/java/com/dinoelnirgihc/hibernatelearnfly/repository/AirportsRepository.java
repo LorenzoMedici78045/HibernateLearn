@@ -24,7 +24,10 @@ public class AirportsRepository
     public List<Airports> selectAllAirports(Session session)
     {
         session.beginTransaction();
-        List<Airports> list = session.createQuery("from Airports", Airports.class).setReadOnly(true).list();
+        List<Airports> list = session.createQuery("from Airports", Airports.class)
+                .setCacheable(true)
+                .setCacheRegion("Query")
+                .setReadOnly(true).list();
         session.getTransaction().commit();
         return list;
     }
