@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -24,6 +26,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Audited
 @Table(name = "BOOKINGS")
 public class Bookings  implements Serializable
 {
@@ -40,9 +43,11 @@ public class Bookings  implements Serializable
     @Size(max = 10)
     private BigDecimal totalAmount;
 
+    @NotAudited
     @OneToMany(mappedBy = "bookings",fetch = FetchType.LAZY)
     private List<Tickets> ticketsList = new ArrayList<>();
 
+    @NotAudited
     @OneToMany(mappedBy = "bookingsBook",fetch = FetchType.LAZY)
     private List<Tickets> ticketsListLists = new ArrayList<>();
 

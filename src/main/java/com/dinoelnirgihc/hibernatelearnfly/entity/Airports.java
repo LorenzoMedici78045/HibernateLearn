@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Table(name = "AIRPORTS")
+@Audited
 @OptimisticLocking(type = OptimisticLockType.VERSION)
 public class Airports implements Serializable
 {
@@ -50,15 +53,19 @@ public class Airports implements Serializable
     @Pattern(regexp = ".*[/]].*", message = "Use timezone form")
     private String timezone;
 
+    @NotAudited
     @OneToMany(mappedBy = "airportArrival" ,fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Flights> arrivalFlights = new ArrayList<>();
 
+    @NotAudited
     @OneToMany(mappedBy = "airportDeparture" ,fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Flights> departureFlights = new ArrayList<>();
 
+    @NotAudited
     @OneToMany(mappedBy = "airportArrivalCode" ,fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Flights> arrivalFlightsCode = new ArrayList<>();
 
+    @NotAudited
     @OneToMany(mappedBy = "airportDepartureCode" ,fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Flights> departureFlightsCode = new ArrayList<>();
 }

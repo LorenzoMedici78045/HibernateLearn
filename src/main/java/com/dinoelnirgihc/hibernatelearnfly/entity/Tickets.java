@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Audited
 @Table(name = "TICKETS")
 public class Tickets implements Serializable
 {
@@ -33,6 +36,7 @@ public class Tickets implements Serializable
     @Column(name = "TICKET_NO")
     private Long id;
 
+    @NotAudited
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BOOK_REF"/*referencedColumnName = "id"*/,
             insertable=false, updatable=false)
@@ -46,12 +50,14 @@ public class Tickets implements Serializable
                     @AttributeOverride(name = "contactData", column = @Column(name = "CONTACT_DATA"))})
     private User user;
 
+    @NotAudited
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BOOK_REF"/*referencedColumnName = "id"*/,
             insertable=false, updatable=false)
     //BOOKINGS_BOOK_REF
     private Bookings bookingsBook;
 
+    @NotAudited
     @OneToMany(mappedBy = "ticket", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<TicketFlights> ticketFlights = new ArrayList<>();
 

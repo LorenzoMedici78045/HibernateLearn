@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import jdk.jfr.Name;
 import lombok.*;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import java.io.Serializable;
 
@@ -22,6 +24,7 @@ import java.io.Serializable;
 )
 @NoArgsConstructor
 @Builder
+@Audited
 @Table(name = "BOARDING_PASSES")
 public class BoardingPasses implements Serializable
 {
@@ -35,6 +38,7 @@ public class BoardingPasses implements Serializable
     private Long seatNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @NotAudited
     @JoinColumns({
             @JoinColumn(name = "TICKET_NO",
                     insertable=false, updatable=false),

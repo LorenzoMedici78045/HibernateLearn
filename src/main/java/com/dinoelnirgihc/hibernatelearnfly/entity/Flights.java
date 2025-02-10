@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -19,6 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Builder
+@Audited
 @Table(name = "FLIGHTS")
 public class Flights implements Serializable
 {
@@ -39,11 +42,13 @@ public class Flights implements Serializable
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp scheduledArrival;
 
+    @NotAudited
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "AIRPORT_CODE"/*referencedColumnName = "airportCode"*/,
             insertable=false, updatable=false)
     private Airports airportDeparture;
 
+    @NotAudited
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "AIRPORT_CODE"/*referencedColumnName = "airportCode"*/,
             insertable=false, updatable=false)
@@ -53,6 +58,7 @@ public class Flights implements Serializable
     @Size(max = 20)
     private String status;
 
+    @NotAudited
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "AIRCRAFT_CODE"/* referencedColumnName = "id"*/,
             insertable=false, updatable=false)
@@ -67,18 +73,21 @@ public class Flights implements Serializable
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp actualArrival;
 
+    @NotAudited
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "AIRPORT_CODE"/*referencedColumnName = "airportCode"*/,
             insertable=false, updatable=false)
     //AIRPORTARRIVAL_AIRPORT_CODE
     private Airports airportArrivalCode;
 
+    @NotAudited
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "AIRPORT_CODE"/*referencedColumnName = "airportCode"*/,
             insertable=false, updatable=false)
     //AIRPORTDEPARTURE_AIRPORT_CODE
     private Airports airportDepartureCode;
 
+    @NotAudited
     @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
     private List<TicketFlights> ticketsFlight = new ArrayList<>();
 }

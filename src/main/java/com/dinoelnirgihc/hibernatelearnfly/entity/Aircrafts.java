@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "AIRCRAFTS")
+@Audited
 @OptimisticLocking(type = OptimisticLockType.VERSION)
 public class Aircrafts implements Serializable
 {
@@ -41,12 +44,15 @@ public class Aircrafts implements Serializable
     @Column(name = "RANGE", nullable = false)
     private int range;
 
+    @NotAudited
     @OneToMany(mappedBy = "aircrafts", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Flights> flights = new ArrayList<>();
 
+    @NotAudited
     @OneToMany(mappedBy = "aircraft", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Seats> seats = new ArrayList<>();
 
+    @NotAudited
     @OneToMany(mappedBy = "aircraftAircraft", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Seats> seatsSeats = new ArrayList<>();
 

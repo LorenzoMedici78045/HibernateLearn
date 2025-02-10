@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -24,6 +26,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Audited
 @Table(name = "TICKET_FLIGHTS")
 public class TicketFlights implements Serializable {
     @EmbeddedId
@@ -33,12 +36,14 @@ public class TicketFlights implements Serializable {
     })
     private TicketFlightsId id;
 
+    @NotAudited
     @ManyToOne
     @JoinColumn(name = "TICKET_NO"/*referencedColumnName = "id"*/,
             insertable=false, updatable=false)
     //TICKET_NO
     private Tickets ticket;
 
+    @NotAudited
     @ManyToOne
     @JoinColumn(name = "FLIGHT_ID"/*referencedColumnName = "id"*/,
             insertable=false, updatable=false)
@@ -53,6 +58,7 @@ public class TicketFlights implements Serializable {
     @Size(max = 10)
     private BigDecimal amount;
 
+    @NotAudited
     @OneToMany(mappedBy = "ticket", fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     private List<BoardingPasses> boardingPasses = new ArrayList<>();
 

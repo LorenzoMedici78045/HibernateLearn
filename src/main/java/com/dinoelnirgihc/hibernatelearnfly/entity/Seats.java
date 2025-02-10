@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import java.io.Serializable;
 
@@ -16,6 +18,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 @Builder
+@Audited
 @Table(name = "SEATS")
 public class Seats implements Serializable
 {
@@ -26,12 +29,14 @@ public class Seats implements Serializable
     @Enumerated(EnumType.STRING)
     private fareConditionsType fareConditions;
 
+    @NotAudited
     @ManyToOne
     @JoinColumn(name = "AIRCRAFT_CODE"/*referencedColumnName = "id"*/,
             insertable=false, updatable=false)
     //AIRCRAFT_CODE
     private Aircrafts aircraft;
 
+    @NotAudited
     @ManyToOne
     @JoinColumn(name = "AIRCRAFT_CODE"/*referencedColumnName = "id"*/,
             insertable=false, updatable=false)
