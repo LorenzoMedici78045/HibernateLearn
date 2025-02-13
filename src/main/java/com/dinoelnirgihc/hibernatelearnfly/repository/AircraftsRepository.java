@@ -27,7 +27,6 @@ public class AircraftsRepository
         List<Aircrafts> list = session.createQuery("from Aircrafts", Aircrafts.class)
                 .setReadOnly(true)
                 .setCacheable(true)
-                .setCacheRegion("Query")
                 .list();
         session.getTransaction().commit();
         return list;

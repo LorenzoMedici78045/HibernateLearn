@@ -26,7 +26,6 @@ public class AirportsRepository
         session.beginTransaction();
         List<Airports> list = session.createQuery("from Airports", Airports.class)
                 .setCacheable(true)
-                .setCacheRegion("Query")
                 .setReadOnly(true).list();
         session.getTransaction().commit();
         return list;

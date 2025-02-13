@@ -27,7 +27,8 @@ import java.util.List;
 @Builder
 @Table(name = "AIRCRAFTS")
 @Audited
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "Aircrafts")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @OptimisticLocking(type = OptimisticLockType.VERSION)
 public class Aircrafts implements Serializable
 {
